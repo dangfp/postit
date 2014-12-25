@@ -13,9 +13,8 @@ class UsersController < ApplicationController
      @user = User.new(user_params)
 
      if @user.save
-      session[:user_id] = @user.id
       flash[:notice] = "You are registed."
-      redirect_to root_path
+      login!(@user)
      else
       render :new
      end
@@ -36,11 +35,11 @@ class UsersController < ApplicationController
    private
 
    def user_params
-     params.require(:user).permit(:username, :password)
+     params.require(:user).permit(:username, :password, :time_zone, :phone)
    end
 
    def set_user
-     @user = User.find(params[:id])
+     @user = User.find_by(slug: params[:id])
    end
 
    def require_same_user

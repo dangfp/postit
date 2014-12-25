@@ -1,16 +1,18 @@
 <% show_post ||= false %>
 <div class="row">
+  <div class="alert alert-error" id="comment_<%= comment.id %>_votes_error" style="display: none"></div>
+  
   <div class="span0 well text-center">
     <% if logged_in? %>
-      <%= link_to(vote_post_comment_path(comment.post, comment, vote: true), method: 'post') do %>
+      <%= link_to(vote_post_comment_path(comment.post, comment, vote: true), remote: true, method: 'post') do %>
         <i class="icon-arrow-up"></i>
       <% end %>
     <% end %>
     <br>
-    <span><%= comment.total_votes %></span> votes
+    <span id="comment_<%= comment.id %>_votes"><%= comment.total_votes %> votes</span>
     <br>
     <% if logged_in? %>
-      <%= link_to(vote_post_comment_path(comment.post, comment, vote: false), method: 'post') do %>
+      <%= link_to(vote_post_comment_path(comment.post, comment, vote: false), remote: true, method: 'post') do %>
         <i class="icon-arrow-down"></i>
       <% end %>
     <% end %>
